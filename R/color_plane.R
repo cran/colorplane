@@ -123,7 +123,7 @@ rgb2hex <- function(r,g,b, alpha) rgb(r, g, b, alpha, maxColorValue = 255)
 #' @export
 col2hex <- function(cname, alpha=1) {
   cmat <- col2rgb(cname)
-  rgb(red = cmat[1,]/255, blue=cmat[2,]/255, green=cmat[3,]/255, alpha=rep(alpha, ncol(cmat)))
+  rgb(red = cmat[1,]/255, green=cmat[2,]/255, blue=cmat[3,]/255, alpha=rep(alpha, ncol(cmat)))
 }
 
 
@@ -294,9 +294,9 @@ setMethod("map_colors", signature=c("DiscreteColorPlane"),
           def=function(x, values, ...) {
             clrs <- as.vector(x@lookup[values])
 
-            wh <- which(sapply(clrs, is.null))
+            wh <- which(vapply(clrs, is.null, logical(1)))
             if (length(wh) > 0) {
-              clrs[wh] <- "000000FF"
+              clrs[wh] <- "#00000000"
             }
             new("HexColorPlane", clr=unlist(clrs))
           })
@@ -306,11 +306,14 @@ setMethod("map_colors", signature=c("DiscreteColorPlane"),
 #' @importFrom grDevices col2rgb
 #' @import assertthat
 #' @rdname map_colors-methods
-#' @param alpha alpha multiplier from 0 to 1.
+#' @param alpha alpha multiplier from 0 to 1. If NULL, uses the alpha value stored in the object.
 #' @param threshold two-sided threshold as a 2-element vector, e.g. `threshold=c(-3,3)` indicating two-sided transparency thresholds.
 #' @param irange the intensity range defining min and max of scale.
 setMethod("map_colors", signature=c("IntensityColorPlane"),
-          def=function(x, alpha=1, threshold=NULL, irange=NULL) {
+          def=function(x, alpha=NULL, threshold=NULL, irange=NULL) {
+            if (is.null(alpha)) {
+              alpha <- x@alpha[1]
+            }
             assertthat::assert_that(alpha >=0 && alpha <= 1)
             if (is.null(irange)) {
               irange <- range(x@intensity, na.rm=TRUE)

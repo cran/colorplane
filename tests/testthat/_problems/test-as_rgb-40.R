@@ -1,0 +1,15 @@
+# Extracted from test-as_rgb.R:40
+
+# setup ------------------------------------------------------------------------
+library(testthat)
+test_env <- simulate_test_env(package = "colorplane", path = "..")
+attach(test_env, warn.conflicts = FALSE)
+
+# test -------------------------------------------------------------------------
+cp <- ConstantColorPlane("#00FF00FF")
+result <- as_rgb(cp)
+expect_true(is.matrix(result))
+expect_equal(result[1, 1], 0)
+expect_equal(result[1, 2], 255)
+expect_equal(result[1, 3], 0)
+expect_equal(result[1, 4], 255)

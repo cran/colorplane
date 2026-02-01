@@ -92,15 +92,4 @@ setGeneric(name="as_hexcol", def=function(x, ...) standardGeneric("as_hexcol"))
 setGeneric(name="alpha_channel", def=function(x, ...) standardGeneric("alpha_channel"))
 
 
-#' get_color
-#'
-#' get the color associated with one or more values
-#'
-#' @param x the color lookup table
-#' @param v the intensity value(s)
-#' @param ... extra args
-#' @export
-#' @rdname get_color-methods
-#' @return a color value
-setGeneric(name="get_color", def=function(x, v, ...) standardGeneric("get_color"))
 

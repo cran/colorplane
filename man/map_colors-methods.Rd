@@ -16,7 +16,7 @@ map_colors(x, ...)
 
 \S4method{map_colors}{DiscreteColorPlane}(x, values, ...)
 
-\S4method{map_colors}{IntensityColorPlane}(x, alpha = 1, threshold = NULL, irange = NULL)
+\S4method{map_colors}{IntensityColorPlane}(x, alpha = NULL, threshold = NULL, irange = NULL)
 }
 \arguments{
 \item{x}{the object to map over}
@@ -25,7 +25,7 @@ map_colors(x, ...)
 
 \item{values}{the values to map to colors via the discrete lookup table}
 
-\item{alpha}{alpha multiplier from 0 to 1.}
+\item{alpha}{alpha multiplier from 0 to 1. If NULL, uses the alpha value stored in the object.}
 
 \item{threshold}{two-sided threshold as a 2-element vector, e.g. `threshold=c(-3,3)` indicating two-sided transparency thresholds.}
 
